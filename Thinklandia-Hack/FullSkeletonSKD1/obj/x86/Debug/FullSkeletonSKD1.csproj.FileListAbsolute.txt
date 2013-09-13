@@ -1,0 +1,28 @@
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.csprojResolveAssemblyReference.cache
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.Form1.resources
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.Properties.Resources.resources
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.csproj.GenerateResource.Cache
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\FullSkeletonSKD1.exe
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\FullSkeletonSKD1.pdb
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.exe
+c:\users\mike.james\documents\visual studio 2010\Projects\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.pdb
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.Form1.resources
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.csproj.GenerateResource.Cache
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\FullSkeletonSKD1.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\System.Windows.Interactivity.xml
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\de\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\en\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\es\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\it\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\A New Hope.exe.config
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\A New Hope.exe
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\bin\Debug\A New Hope.pdb
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\ANewHope.Properties.Resources.resources
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\A New Hope.exe
+C:\Users\Daniel\Downloads\FullSkeletonSKD1\FullSkeletonSKD1\FullSkeletonSKD1\obj\x86\Debug\A New Hope.pdb
