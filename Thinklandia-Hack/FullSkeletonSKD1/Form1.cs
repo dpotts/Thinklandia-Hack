@@ -15,6 +15,10 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Forms;
 
+using Microsoft.Speech.AudioFormat;
+using Microsoft.Speech.Recognition;
+using System.IO;
+
 namespace ANewHope
 {
     public partial class Form1 : Form
@@ -22,6 +26,21 @@ namespace ANewHope
         //Leprechaun: 820x, 650y, 210w, 350h
 
         KinectSensor sensor;
+
+        //and the speech recognition engine (SRE)
+        private SpeechRecognitionEngine speechRecognizer;
+        //Get the speech recognizer (SR)
+        private static RecognizerInfo GetKinectRecognizer()
+        {
+            Func<RecognizerInfo, bool> matchingFunc = r =>
+            {
+                string value;
+                r.AdditionalInfo.TryGetValue("Kinect", out value);
+                return "True".Equals(value, StringComparison.InvariantCultureIgnoreCase) && "en-US".Equals(r.Culture.Name, StringComparison.InvariantCultureIgnoreCase);
+            };
+            return SpeechRecognitionEngine.InstalledRecognizers().Where(matchingFunc).FirstOrDefault();
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -30,11 +49,124 @@ namespace ANewHope
                 if (kinectSensor.Status == KinectStatus.Connected)
                 {
                     sensor = kinectSensor;
+
                     pictureBox2.Parent = pictureBox1;
 
                     pictureBox3.Parent = pictureBox2;
                     pictureBox4.Parent = pictureBox3;
                     break;
+                }
+            }
+        }
+
+        //Start streaming audio
+        private void Start()
+        {
+            //set sensor audio source to variable
+            var audioSource = sensor.AudioSource;
+            //Set the beam angle mode - the direction the audio beam is pointing
+            //we want it to be set to adaptive
+            audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
+            //start the audiosource 
+            var kinectStream = audioSource.Start();
+            //configure incoming audio stream
+            speechRecognizer.SetInputToAudioStream(
+                kinectStream, new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
+            //make sure the recognizer does not stop after completing     
+            speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+            //reduce background and ambient noise for better accuracy
+            sensor.AudioSource.EchoCancellationMode = EchoCancellationMode.None;
+            sensor.AudioSource.AutomaticGainControlEnabled = false;
+        }
+
+        //here is the fun part: create the speech recognizer
+        private SpeechRecognitionEngine CreateSpeechRecognizer()
+        {
+            //set recognizer info
+            RecognizerInfo ri = GetKinectRecognizer();
+            //create instance of SRE
+            SpeechRecognitionEngine sre;
+            sre = new SpeechRecognitionEngine(ri.Id);
+
+            //Now we need to add the words we want our program to recognise
+            var grammar = new Choices();
+            grammar.Add("next");
+            grammar.Add("previous");
+
+           // grammar.Add("cheese");
+            grammar.Add("capture");
+            //grammar.Add("picture");
+           // grammar.Add("save");
+
+
+
+
+
+
+            //set culture - language, country/region
+            var gb = new GrammarBuilder { Culture = ri.Culture };
+            gb.Append(grammar);
+
+            //set up the grammar builder
+            var g = new Grammar(gb);
+            sre.LoadGrammar(g);
+
+            //Set events for recognizing, hypothesising and rejecting speech
+            sre.SpeechRecognized += SreSpeechRecognized;
+            sre.SpeechRecognitionRejected += SreSpeechRecognitionRejected;
+            return sre;
+        }
+
+        //if speech is rejected
+        private void RejectSpeech(RecognitionResult result)
+        {
+            textBox1.Text = "Pardon Moi?";
+        }
+
+        private void SreSpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
+        {
+            RejectSpeech(e.Result);
+        }
+
+
+        //Speech is recognised
+        private void SreSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            //Very important! - change this value to adjust accuracy - the higher the value
+            //the more accurate it will have to be, lower it if it is not recognizing you
+
+
+            if (e.Result.Confidence < .95)
+            {
+                RejectSpeech(e.Result);
+            }
+            else 
+            {
+                //and finally, here we set what we want to happen when 
+                //the SRE recognizes a word
+                switch (e.Result.Text.ToUpperInvariant())
+                {
+                    case "NEXT":
+                        textBox1.Text = "next";
+                        break;
+                    case "PREVIOUS":
+                        textBox1.Text = "back";
+                        break;
+                    //case "CHEESE":
+                    //    textBox1.Text = "picture0";
+                    //     break;
+                    case "CAPTURE":
+                        textBox1.Text = "picture1";
+                        break;
+                    // case "PICTURE":
+                    //     textBox1.Text = "picture2";
+                    //      break;
+                    //  case "SAVE":
+                    //     textBox1.Text = "picture3";
+                    //      break;
+                    default:
+                        textBox1.Text = "huh?";
+                        break;
                 }
             }
         }
@@ -50,6 +182,8 @@ namespace ANewHope
                 sensor.SkeletonStream.Enable();
                 sensor.AllFramesReady += FramesReady;
                 sensor.Start();
+                speechRecognizer = CreateSpeechRecognizer();
+                Start();
             }
        
 // I dunno if we'll need this later but maybe. lets just keep it in because its going the exception crap that we may need
