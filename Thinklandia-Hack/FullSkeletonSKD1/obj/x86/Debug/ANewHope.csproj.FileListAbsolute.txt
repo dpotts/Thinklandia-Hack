@@ -30,3 +30,11 @@ C:\Users\Noel\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD
 C:\Users\Noel\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\A New Hope.exe
 C:\Users\Noel\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\A New Hope.pdb
 C:\Users\microsoft\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\bin\Debug\A New Hope.exe.config
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\bin\Debug\A New Hope.exe.config
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\bin\Debug\A New Hope.exe
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\bin\Debug\A New Hope.pdb
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\ANewHope.Form1.resources
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\ANewHope.Properties.Resources.resources
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\ANewHope.csproj.GenerateResource.Cache
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\A New Hope.exe
+C:\Users\leco\Documents\GitHub\Thinklandia-Hack\Thinklandia-Hack\FullSkeletonSKD1\obj\x86\Debug\A New Hope.pdb

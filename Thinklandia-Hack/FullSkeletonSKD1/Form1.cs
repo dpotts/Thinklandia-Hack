@@ -127,6 +127,9 @@ namespace ANewHope
                 }
 
             }
+            VFrame.Dispose();
+            SFrame.Dispose();
+
             pictureBox1.Image = bmap;
         }
 
