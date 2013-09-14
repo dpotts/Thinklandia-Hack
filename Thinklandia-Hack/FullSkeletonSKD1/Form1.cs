@@ -81,9 +81,6 @@ namespace ANewHope
 
             Bitmap bitmap = new Bitmap(widthPixels, heightPixels, PixelFormat.Format32bppRgb);
 
-            //g = Graphics.FromImage(bitmap);
-
-
             Graphics g = Graphics.FromImage(bmap);
             g.DrawEllipse(skyBluePen, x , (y + 15.0f), widthPixels, heightPixels);
             cropImageToCircle(bmap, x, (y + 15.0f), widthPixels, heightPixels);
@@ -105,23 +102,6 @@ namespace ANewHope
             Console.WriteLine("LOLOL " + width + " " + height);
         }
 
-        
-
-        /*private static Int32Rect EstimateCutoutRect(ColorImageStream stream,ColorImagePoint colorPoint,float depthMeters,float widthMeters,float heightMeters)
-        {
-            // Convert dimensions in meters to pixels, taking depth distance into account
-            float focalLength = stream.NominalFocalLengthInPixels;
-            int widthPixels = (int)((widthMeters * focalLength) / depthMeters);
-            int heightPixels = (int)((heightMeters * focalLength) / depthMeters);
-
-            // Calculate rectangle, taking care to stay in-bounds
-            int x = System.Math.Max(0, colorPoint.X - (widthPixels / 2));
-            int y = System.Math.Max(0, colorPoint.Y - (heightPixels / 2));
-            widthPixels = System.Math.Min(widthPixels, stream.FrameWidth - x);
-            heightPixels = System.Math.Min(heightPixels, stream.FrameHeight - y);
-            return new Int32Rect(x, y, widthPixels, heightPixels);
-        }*/
-
         void FramesReady(object sender, AllFramesReadyEventArgs e)
         {
             ColorImageFrame VFrame = e.OpenColorImageFrame();
@@ -142,37 +122,10 @@ namespace ANewHope
                 if (S.TrackingState == SkeletonTrackingState.Tracked)
                 {
 
-                    /*//body
-                    DrawBone(JointType.Head, JointType.ShoulderCenter, S, g);
-                    DrawBone(JointType.ShoulderCenter, JointType.Spine, S, g);
-                    DrawBone(JointType.Spine, JointType.HipCenter, S, g);
-                    //left leg
-                    DrawBone(JointType.HipCenter, JointType.HipLeft, S, g);
-                    DrawBone(JointType.HipLeft, JointType.KneeLeft, S, g);
-                    DrawBone(JointType.KneeLeft, JointType.AnkleLeft, S, g);
-                    DrawBone(JointType.AnkleLeft, JointType.FootLeft, S, g);
-                    //Right Leg
-                    DrawBone(JointType.HipCenter, JointType.HipRight, S, g);
-                    DrawBone(JointType.HipRight, JointType.KneeRight, S, g);
-                    DrawBone(JointType.KneeRight, JointType.AnkleRight, S, g);
-                    DrawBone(JointType.AnkleRight, JointType.FootRight, S, g);
-                    //Left Arm
-                    DrawBone(JointType.ShoulderCenter, JointType.ShoulderLeft, S, g);
-                    DrawBone(JointType.ShoulderLeft, JointType.ElbowLeft, S, g);
-                    DrawBone(JointType.ElbowLeft, JointType.WristLeft, S, g);
-                    DrawBone(JointType.WristLeft, JointType.HandLeft, S, g);
-                    //Right Arm
-                    DrawBone(JointType.ShoulderCenter, JointType.ShoulderRight, S, g);
-                    DrawBone(JointType.ShoulderRight, JointType.ElbowRight, S, g);
-                    DrawBone(JointType.ElbowRight, JointType.WristRight, S, g);
-                    DrawBone(JointType.WristRight, JointType.HandRight, S, g);*/
-
                     ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.2f, 0.27f);
 
 
                 }
-
-
 
             }
             pictureBox1.Image = bmap;
