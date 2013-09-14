@@ -23,18 +23,57 @@ namespace ANewHope
         public Form1()
         {
             InitializeComponent();
-            sensor = KinectSensor.KinectSensors[0];
+            foreach (var kinectSensor in KinectSensor.KinectSensors)
+            {
+                if (kinectSensor.Status == KinectStatus.Connected)
+                {
+                    sensor = kinectSensor;
+                    break;
+                }
+            }
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
-            sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-            sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
-            sensor.SkeletonStream.Enable();
+            if (sensor != null)
+            {
+                sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
+                sensor.SkeletonStream.EnableTrackingInNearRange = false;
+                sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
+                sensor.SkeletonStream.Enable();
+                sensor.AllFramesReady += FramesReady;
+                sensor.Start();
+            }
+       
+// I dunno if we'll need this later but maybe. lets just keep it in because its going the exception crap that we may need
+    //        if (sensor == null)
+    //        {
+  /*              sensor.Start();
+                try
+                {
+                    sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                    sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
+                    try
+                    {
+                        sensor.DepthStream.Range = DepthRange.Near;
+                        sensor.SkeletonStream.EnableTrackingInNearRange = true;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        sensor.DepthStream.Range = DepthRange.Default;
+                        sensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    }
+                    sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
+                    sensor.SkeletonStream.Enable();
+                    sensor.AllFramesReady += FramesReady;
 
-            sensor.AllFramesReady += FramesReady;
-            sensor.Start();
+ 
+                }
+                catch (InvalidOperationException)
+                {
+                }*/
+    //        }
         }
 
         private static Bitmap ExtractBodyPartBitmap(KinectSensor sensor,Skeleton skeleton, Bitmap bmap, JointType jointType,float widthMeters,float heightMeters)
