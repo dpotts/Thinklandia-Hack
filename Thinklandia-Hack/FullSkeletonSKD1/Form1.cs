@@ -81,8 +81,8 @@ namespace ANewHope
 
             Bitmap bitmap = new Bitmap(widthPixels, heightPixels, PixelFormat.Format32bppRgb);
 
-            Graphics g = Graphics.FromImage(bmap);
-            g.DrawEllipse(skyBluePen, x , (y + 15.0f), widthPixels, heightPixels);
+            //Graphics g = Graphics.FromImage(bmap);
+            //g.DrawEllipse(skyBluePen, x , (y + 15.0f), widthPixels, heightPixels);
             cropImageToCircle(bmap, x, (y + 15.0f), widthPixels, heightPixels);
 
             return bitmap;
@@ -94,12 +94,11 @@ namespace ANewHope
             Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
             TextureBrush tb = new TextureBrush(cropped);
             Graphics g = Graphics.FromImage(bmap);
-            g.FillEllipse(tb, 10, 10, width, height);
+            g.FillEllipse(tb, 0, 0, width, height);
 
             //Bitmap final = new Bitmap((int)width, (int)height);
             //Graphics g = Graphics.FromImage(final);
             //g.FillEllipse(tb, 0, 0, width, height);
-            Console.WriteLine("LOLOL " + width + " " + height);
         }
 
         void FramesReady(object sender, AllFramesReadyEventArgs e)
@@ -122,7 +121,7 @@ namespace ANewHope
                 if (S.TrackingState == SkeletonTrackingState.Tracked)
                 {
 
-                    ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.2f, 0.27f);
+                    ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
 
 
                 }
