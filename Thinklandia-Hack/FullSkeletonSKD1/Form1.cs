@@ -37,7 +37,7 @@ namespace ANewHope
             sensor.Start();
         }
 
-        private static Bitmap ExtractBodyPartBitmap(KinectSensor sensor,Skeleton skeleton, Graphics g, JointType jointType,float widthMeters,float heightMeters)
+        private static Bitmap ExtractBodyPartBitmap(KinectSensor sensor,Skeleton skeleton, Bitmap bmap, JointType jointType,float widthMeters,float heightMeters)
         {
             ColorImageStream stream = sensor.ColorStream;
             ColorImageFormat imageFormat = stream.Format;
@@ -52,7 +52,7 @@ namespace ANewHope
 
             // Estimate a cutout rectangle centered on the pixel coordinates
             //Int32Rect rect = EstimateCutoutRect(stream, colorPoint, skeletonPoint.Z, widthMeters, heightMeters);
-            Bitmap bitmap = DrawHead(stream, g, colorPoint, skeletonPoint.Z, widthMeters, heightMeters);
+            Bitmap bitmap = DrawHead(stream, bmap, colorPoint, skeletonPoint.Z, widthMeters, heightMeters);
 
             // Cut out the appropriate part of the image
             //WriteableBitmap bitmap = new WriteableBitmap(rect.Width, rect.Height, 96, 96, PixelFormats.Bgr32, null);
@@ -60,7 +60,7 @@ namespace ANewHope
             return bitmap;
         }
 
-        private static Bitmap DrawHead(ColorImageStream stream, Graphics g, ColorImagePoint colorPoint, float depthMeters, float widthMeters, float heightMeters)
+        private static Bitmap DrawHead(ColorImageStream stream, Bitmap bmap, ColorImagePoint colorPoint, float depthMeters, float widthMeters, float heightMeters)
         {
             float focalLength = stream.NominalFocalLengthInPixels;
             int widthPixels = (int)((widthMeters * focalLength) / depthMeters);
@@ -84,11 +84,28 @@ namespace ANewHope
             //g = Graphics.FromImage(bitmap);
 
 
-
+            Graphics g = Graphics.FromImage(bmap);
             g.DrawEllipse(skyBluePen, x , (y + 15.0f), widthPixels, heightPixels);
+            cropImageToCircle(bmap, x, (y + 15.0f), widthPixels, heightPixels);
 
             return bitmap;
         }
+
+        private static void cropImageToCircle(Bitmap bmap, float circleStartX, float circleStartY, float width, float height)
+        {
+            Rectangle aRect = new Rectangle((int)circleStartX, (int)circleStartY, (int)width, (int)height);
+            Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
+            TextureBrush tb = new TextureBrush(cropped);
+            Graphics g = Graphics.FromImage(bmap);
+            g.FillEllipse(tb, 10, 10, width, height);
+
+            //Bitmap final = new Bitmap((int)width, (int)height);
+            //Graphics g = Graphics.FromImage(final);
+            //g.FillEllipse(tb, 0, 0, width, height);
+            Console.WriteLine("LOLOL " + width + " " + height);
+        }
+
+        
 
         /*private static Int32Rect EstimateCutoutRect(ColorImageStream stream,ColorImagePoint colorPoint,float depthMeters,float widthMeters,float heightMeters)
         {
@@ -150,7 +167,7 @@ namespace ANewHope
                     DrawBone(JointType.ElbowRight, JointType.WristRight, S, g);
                     DrawBone(JointType.WristRight, JointType.HandRight, S, g);*/
 
-                    ExtractBodyPartBitmap(this.sensor, S, g, JointType.Head, 0.2f, 0.27f);
+                    ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.2f, 0.27f);
 
 
                 }
@@ -178,11 +195,9 @@ namespace ANewHope
 
 
 
-        Bitmap ImageToBitmap(
-                           ColorImageFrame Image)
+        Bitmap ImageToBitmap(ColorImageFrame Image)
         {
-            byte[] pixelData =
-                     new byte[Image.PixelDataLength];
+            byte[] pixelData = new byte[Image.PixelDataLength];
             Image.CopyPixelDataTo(pixelData);
             Bitmap bmap = new Bitmap(
                    Image.Width,
