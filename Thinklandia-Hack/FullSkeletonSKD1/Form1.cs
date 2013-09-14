@@ -130,10 +130,15 @@ namespace ANewHope
         private static void cropImageToCircle(Bitmap bmap, float circleStartX, float circleStartY, float width, float height)
         {
             Rectangle aRect = new Rectangle((int)circleStartX, (int)circleStartY, (int)width, (int)height);
-            Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
-            TextureBrush tb = new TextureBrush(cropped);
-            Graphics g = Graphics.FromImage(bmap);
-            g.FillEllipse(tb, 0, 0, width, height);
+
+            // Check if aRect is within bmap bounds before using Clone() method 
+            if ((bmap.Width >= aRect.Right) && (bmap.Height >= aRect.Bottom))
+            {
+                Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
+                TextureBrush tb = new TextureBrush(cropped);
+                Graphics g = Graphics.FromImage(bmap);
+                g.FillEllipse(tb, 0, 0, width, height);
+            }
 
             //Bitmap final = new Bitmap((int)width, (int)height);
             //Graphics g = Graphics.FromImage(final);
@@ -166,6 +171,8 @@ namespace ANewHope
                 }
 
             }
+
+            // Release resources used by VFrame and SFrame objects 
             VFrame.Dispose();
             SFrame.Dispose();
 
