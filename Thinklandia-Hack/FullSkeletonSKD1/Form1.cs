@@ -31,6 +31,9 @@ namespace ANewHope
                 {
                     sensor = kinectSensor;
                     pictureBox2.Parent = pictureBox1;
+
+                    pictureBox3.Parent = pictureBox2;
+                    pictureBox4.Parent = pictureBox3;
                     break;
                 }
             }
@@ -185,16 +188,17 @@ namespace ANewHope
             bmap.MakeTransparent(Color.Red);
             Size tempSize = bmap.Size;
             
-            tempSize.Width = 90;
-            tempSize.Height = 135;
+            tempSize.Width = 130;
+            tempSize.Height = 175;
 
             pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
             pictureBox3.Size = tempSize;
+            pictureBox3.Location = new Point(pictureBox2.Width / 2-20, 120);
             pictureBox2.BackColor = Color.Transparent;
 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox4.Location = new Point(0, 0);
-            pictureBox4.Size = pictureBox3.Size;
+            pictureBox4.Size = new Size(120, 175);
         }
 
         void DrawBone(JointType j1, JointType j2, Skeleton S, Graphics g)
