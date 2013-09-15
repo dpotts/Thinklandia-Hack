@@ -22,8 +22,8 @@ using System.IO;
 //smoothing
 //adding text to ecard?
 //email?
-//another picture?
-//multiple people
+//capture
+//gestures?
 
 namespace ANewHope
 {
@@ -32,6 +32,8 @@ namespace ANewHope
         KinectSensor sensor;
 
         int page = 1;
+        public int firstTracked = 0;
+
         //and the speech recognition engine (SRE)
         private SpeechRecognitionEngine speechRecognizer;
         //Get the speech recognizer (SR)
@@ -49,7 +51,10 @@ namespace ANewHope
         public Form1()
         {
             InitializeComponent();
-
+            pictureBox8.Hide();
+            pictureBox9.Hide();
+            pictureBox6.Hide();
+            pictureBox10.Hide();
             pictureBox2.Parent = pictureBox1;
 
             pictureBox3.Parent = pictureBox2;
@@ -69,16 +74,39 @@ namespace ANewHope
         {
             if (page == 1)
             {
+                pictureBox6.Show();
                 pictureBox6.Location = pictureBox2.Location;
-                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 140), pictureBox1.Location.Y);
-                //pictureBox2.Location = new Point(this.Location.X - (pictureBox2.Width + 120), pictureBox2.Location.Y);
+                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 200), pictureBox1.Location.Y);
+                pictureBox1.Hide();
                 page = 2;
+                if (textBox1.Text == "HAVE A LUCKY BIRTHDAY!!!") textBox1.Text = "Happy Birthday, Mr. President!";
             }
             else if (page == 2)
             {
-                pictureBox1.Location = pictureBox6.Location;
-                pictureBox6.Location = new Point(this.Width + 20, pictureBox6.Location.Y);
+                pictureBox9.Show();
+                pictureBox9.Location = pictureBox6.Location;
+                pictureBox6.Location = new Point(this.Width + 100, pictureBox6.Location.Y);
+                pictureBox6.Hide();
+                page = 3;
+                if (textBox1.Text == "Happy Birthday, Mr. President!") textBox1.Text = "MERRY CHRISTMAS";
+            }
+            else if (page == 3)
+            {
+                pictureBox10.Show();
+                pictureBox10.Location = pictureBox9.Location;
+                pictureBox9.Location = new Point(this.Width + 100, pictureBox9.Location.Y);
+                pictureBox9.Hide();
+                page = 4;
+                if (textBox1.Text == "MERRY CHRISTMAS") textBox1.Text = "HAPPY BIRTHDAY!!!";
+            }
+            else if (page == 4)
+            {
+                pictureBox1.Show();
+                pictureBox1.Location = pictureBox10.Location;
+                pictureBox10.Location = new Point(this.Width + 100, pictureBox10.Location.Y);
+                pictureBox10.Hide();
                 page = 1;
+                if (textBox1.Text == "HAPPY BIRTHDAY!!!") textBox1.Text = "HAVE A LUCKY BIRTHDAY!!!";
             }
         }
 
@@ -86,17 +114,39 @@ namespace ANewHope
         {
             if (page == 1)
             {
-                pictureBox6.Location = pictureBox2.Location;
-                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 140), pictureBox1.Location.Y);
-                //pictureBox2.Location = new Point(this.Location.X - (pictureBox2.Width + 120), pictureBox2.Location.Y);
-                page = 2;
+                pictureBox10.Show();
+                pictureBox10.Location = pictureBox2.Location;
+                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 220), pictureBox1.Location.Y);
+                pictureBox1.Hide();
+                page = 4;
+                if (textBox1.Text == "HAVE A LUCKY BIRTHDAY!!!") textBox1.Text = "HAPPY BIRTHDAY!!!";
             }
             else if (page == 2)
             {
+                pictureBox1.Show();
                 pictureBox1.Location = pictureBox6.Location;
-                pictureBox6.Location = new Point(this.Width + 20, pictureBox6.Location.Y);
+                pictureBox6.Location = new Point(this.Width + 100, pictureBox6.Location.Y);
+                pictureBox6.Hide();
                 page = 1;
-
+                if (textBox1.Text == "Happy Birthday, Mr. President!") textBox1.Text = "HAVE A LUCKY BIRTHDAY!!!";
+            }
+            else if (page == 3)
+            {
+                pictureBox6.Show();
+                pictureBox6.Location = pictureBox9.Location;
+                pictureBox9.Location = new Point(this.Width + 100, pictureBox9.Location.Y);
+                pictureBox9.Hide();
+                page = 2;
+                if (textBox1.Text == "MERRY CHRISTMAS") textBox1.Text = "Happy Birthday, Mr. President!";
+            }
+            else if (page == 4)
+            {
+                pictureBox9.Show();
+                pictureBox9.Location = pictureBox10.Location;
+                pictureBox10.Location = new Point(this.Width + 100, pictureBox10.Location.Y);
+                pictureBox10.Hide();
+                page = 3;
+                if (textBox1.Text == "HAPPY BIRTHDAY!!!") textBox1.Text = "MERRY CHRISTMAS";
             }
 
         }
@@ -134,7 +184,7 @@ namespace ANewHope
             grammar.Add("next");
             grammar.Add("previous");
 
-            grammar.Add("happy birthday");
+            grammar.Add("celebrate");
             grammar.Add("capture");
             grammar.Add("congratulations");
             grammar.Add("rifflandia");
@@ -198,8 +248,11 @@ namespace ANewHope
                         break;
                     case "CAPTURE":
                         break;
-                    case "HAPPY BIRTHDAY":
-                         textBox1.Text = "HAPPY BIRTHDAY!!!";
+                    case "CELEBRATE":
+                        if (page == 1) textBox1.Text = "HAVE A LUCKY BIRTHDAY!!!";
+                        else if (page == 2) textBox1.Text = "Happy Birthday, Mr. President!";
+                        else if (page == 3) textBox1.Text = "MERRY CHRISTMAS";
+                        else textBox1.Text = "HAPPY BIRTHDAY!!!";
                           break;
                       case "CONGRATULATIONS":
                           textBox1.Text = "CONGRATULATIONS!!!";
@@ -291,6 +344,16 @@ namespace ANewHope
                 wScale = (float)170.0;
                 hScale = (float)230.0;
             }
+            else if (page == 3)
+            {
+                wScale = (float)90.0;
+                hScale = (float)120.0;
+            }
+            else if (page == 4)
+            {
+                wScale = (float)110.0;
+                hScale = (float)135.0;
+            }
 
             // Check if aRect is within bmap bounds before using Clone() method 
             if ((bmap.Width >= aRect.Right) && (bmap.Height >= aRect.Bottom))
@@ -324,12 +387,47 @@ namespace ANewHope
             Skeleton[] Skeletons = new Skeleton[SFrame.SkeletonArrayLength];
             SFrame.CopySkeletonDataTo(Skeletons);
 
+            int numTracked = 0;
             foreach (Skeleton S in Skeletons)
             {
+                if (S.TrackingId > 0) numTracked++;
+            }
+
+            //Console.WriteLine("NUMTracked " + numTracked);
+            foreach (Skeleton S in Skeletons)
+            {
+                if (numTracked == 0)
+                    {
+                        pictureBox3.Hide();
+                        pictureBox8.Hide();
+                        firstTracked = 0;
+                        //Console.WriteLine("YOU SHOULD BE HIDING");
+                    }
                 if (S.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    if (S.TrackingId == 2) ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
-                    else ExtractBodyPartBitmap(this.sensor, S, mapTwo, JointType.Head, 0.17f, 0.26f);
+                    if (numTracked == 1)
+                    {
+                        pictureBox3.Show();
+                        ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
+                        pictureBox8.Hide();
+                        firstTracked = S.TrackingId;
+                    }
+                    else if (numTracked > 1)
+                    {
+                        pictureBox3.Show();
+                        if (page == 1 || page == 2) pictureBox8.Hide();
+                        else pictureBox8.Show();
+                        if (S.TrackingId == firstTracked)
+                        {
+                            ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
+                            Console.WriteLine("TRACKED " + firstTracked + " WITH " + S.TrackingId);
+                        }
+                        else
+                        {
+                            ExtractBodyPartBitmap(this.sensor, S, mapTwo, JointType.Head, 0.17f, 0.26f);
+                            Console.WriteLine("TRACKED " + firstTracked + " WITH " + S.TrackingId);
+                        }
+                    }
                 }
 
             }
@@ -363,6 +461,34 @@ namespace ANewHope
 
                 tempSize.Width = 170;
                 tempSize.Height = 230;
+            }
+            else if (page == 3)
+            {
+                pictureBox3.Parent = pictureBox9;
+
+                pictureBox3.Location = new Point(pictureBox9.Width / 2 - 125, 125);
+
+                //do same for picturebox.8
+                pictureBox8.Parent = pictureBox9;
+
+                pictureBox8.Location = new Point(pictureBox9.Width / 2 + 80, 165);
+
+                tempSize.Width = 90;
+                tempSize.Height = 120;
+            }
+            else if (page == 4)
+            {
+                pictureBox3.Parent = pictureBox10;
+
+                pictureBox3.Location = new Point(pictureBox10.Width / 2 + 30, 175);
+
+                //do same for picturebox.8
+                pictureBox8.Parent = pictureBox10;
+
+                pictureBox8.Location = new Point(pictureBox10.Width / 2 - 125, 175);
+
+                tempSize.Width = 110;
+                tempSize.Height = 135;
             }
 
             pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
