@@ -142,12 +142,13 @@ namespace ANewHope
             {
                 Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
                 TextureBrush tb = new TextureBrush(cropped);
-
+                float xScale = (float)(110.0 / width);
+                tb.ScaleTransform(xScale, xScale);
                 
                 Graphics g = Graphics.FromImage(bmap);
                 Color c = Color.Red;
                 g.Clear(c);
-                g.FillEllipse(tb, 0, 0, width, height);
+                g.FillEllipse(tb, 0, 0, 110, 150);
             }
             //Bitmap final = new Bitmap((int)width, (int)height);
             //Graphics g = Graphics.FromImage(final);
@@ -188,17 +189,18 @@ namespace ANewHope
             bmap.MakeTransparent(Color.Red);
             Size tempSize = bmap.Size;
             
-            tempSize.Width = 130;
-            tempSize.Height = 175;
+            tempSize.Width = 115;
+            tempSize.Height = 150;
 
             pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
             pictureBox3.Size = tempSize;
-            pictureBox3.Location = new Point(pictureBox2.Width / 2-20, 120);
+            pictureBox3.Location = new Point(pictureBox2.Width / 2-15, 135);
             pictureBox2.BackColor = Color.Transparent;
 
             pictureBox1.BackColor = Color.Transparent;
-            pictureBox4.Location = new Point(0, 0);
-            pictureBox4.Size = new Size(120, 175);
+            pictureBox4.Location = new Point(-300, -300);
+            pictureBox4.Size = new Size(130, 175);
+            
         }
 
         void DrawBone(JointType j1, JointType j2, Skeleton S, Graphics g)
@@ -241,6 +243,11 @@ namespace ANewHope
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             sensor.Stop();
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+
         }
 
 
