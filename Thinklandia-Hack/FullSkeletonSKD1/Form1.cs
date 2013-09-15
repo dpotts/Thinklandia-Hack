@@ -134,10 +134,13 @@ namespace ANewHope
             grammar.Add("next");
             grammar.Add("previous");
 
-            // grammar.Add("cheese");
+            grammar.Add("happy birthday");
             grammar.Add("capture");
-            //grammar.Add("picture");
-            // grammar.Add("save");
+            grammar.Add("congratulations");
+            grammar.Add("rifflandia");
+
+            grammar.Add("clear");
+
 
 
 
@@ -161,7 +164,7 @@ namespace ANewHope
         //if speech is rejected
         private void RejectSpeech(RecognitionResult result)
         {
-            textBox1.Text = "Pardon Moi?";
+            Console.WriteLine("Rejected Speech");
         }
 
         private void SreSpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
@@ -177,7 +180,7 @@ namespace ANewHope
             //the more accurate it will have to be, lower it if it is not recognizing you
 
 
-            if (e.Result.Confidence < .95)
+            if (e.Result.Confidence < .80)
             {
                 RejectSpeech(e.Result);
             }
@@ -188,27 +191,26 @@ namespace ANewHope
                 switch (e.Result.Text.ToUpperInvariant())
                 {
                     case "NEXT":
-                        textBox1.Text = "next";
                         this.pictureBox5_Click(null, null);
                         break;
                     case "PREVIOUS":
-                        textBox1.Text = "back";
                         this.pictureBox7_Click(null, null);
                         break;
-                    //case "CHEESE":
-                    //    textBox1.Text = "picture0";
-                    //     break;
                     case "CAPTURE":
-                        textBox1.Text = "picture1";
                         break;
-                    // case "PICTURE":
-                    //     textBox1.Text = "picture2";
-                    //      break;
-                    //  case "SAVE":
-                    //     textBox1.Text = "picture3";
-                    //      break;
+                    case "HAPPY BIRTHDAY":
+                         textBox1.Text = "HAPPY BIRTHDAY!!!";
+                          break;
+                      case "CONGRATULATIONS":
+                          textBox1.Text = "CONGRATULATIONS!!!";
+                          break;
+                      case "RIFFLANDIA":
+                          textBox1.Text = "ENJOY RIFFLANDIA!";
+                          break;
+                      case "CLEAR":
+                          textBox1.Text = null;
+                          break;
                     default:
-                        textBox1.Text = "huh?";
                         break;
                 }
             }
