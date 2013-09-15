@@ -264,14 +264,6 @@ namespace ANewHope
             widthPixels = System.Math.Min(widthPixels, stream.FrameWidth - x);
             heightPixels = System.Math.Min(heightPixels, stream.FrameHeight - y);
 
-            Pen skyBluePen = new Pen(Brushes.White);
-
-            // Set the pen's width.
-            skyBluePen.Width = 5.0F;
-
-            // Set the LineJoin property.
-            skyBluePen.LineJoin = System.Drawing.Drawing2D.LineJoin.Bevel;
-
             Bitmap bitmap = new Bitmap(widthPixels, heightPixels, PixelFormat.Format32bppRgb);
 
             //Graphics g = Graphics.FromImage(bmap);
@@ -322,12 +314,11 @@ namespace ANewHope
             if (VFrame == null) return;
             byte[] pixelS = new byte[VFrame.PixelDataLength];
             Bitmap bmap = ImageToBitmap(VFrame);
-
+            Bitmap mapTwo = ImageToBitmap(VFrame);
 
             SkeletonFrame SFrame = e.OpenSkeletonFrame();
             if (SFrame == null) return;
 
-            Graphics g = Graphics.FromImage(bmap);
             Skeleton[] Skeletons = new Skeleton[SFrame.SkeletonArrayLength];
             SFrame.CopySkeletonDataTo(Skeletons);
 
@@ -335,9 +326,8 @@ namespace ANewHope
             {
                 if (S.TrackingState == SkeletonTrackingState.Tracked)
                 {
-
-                    ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
-
+                    if (S.TrackingId == 2) ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
+                    else ExtractBodyPartBitmap(this.sensor, S, mapTwo, JointType.Head, 0.17f, 0.26f);
                 }
 
             }
@@ -347,6 +337,7 @@ namespace ANewHope
             SFrame.Dispose();
 
             pictureBox3.Image = bmap;
+            pictureBox8.Image = mapTwo;
             bmap.MakeTransparent(Color.Red);
             Size tempSize = bmap.Size;
 
@@ -374,6 +365,8 @@ namespace ANewHope
 
             pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
             pictureBox3.Size = tempSize;
+            pictureBox8.SizeMode = PictureBoxSizeMode.Normal;
+            pictureBox8.Size = tempSize;
 
             pictureBox2.BackColor = Color.Transparent;
 
