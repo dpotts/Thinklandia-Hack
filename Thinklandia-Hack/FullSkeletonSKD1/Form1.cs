@@ -70,7 +70,7 @@ namespace ANewHope
             if (page == 1)
             {
                 pictureBox6.Location = pictureBox2.Location;
-                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 120), pictureBox1.Location.Y);
+                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 140), pictureBox1.Location.Y);
                 //pictureBox2.Location = new Point(this.Location.X - (pictureBox2.Width + 120), pictureBox2.Location.Y);
                 page = 2;
             }
