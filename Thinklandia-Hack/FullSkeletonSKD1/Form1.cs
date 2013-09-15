@@ -292,7 +292,7 @@ namespace ANewHope
             if (sensor != null)
             {
                 sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
+                sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
                 sensor.SkeletonStream.EnableTrackingInNearRange = false;
                 sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
                 sensor.SkeletonStream.Enable();
