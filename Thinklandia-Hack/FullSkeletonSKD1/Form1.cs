@@ -22,7 +22,6 @@ using System.IO;
 //smoothing
 //adding text to ecard?
 //email?
-//capture
 //gestures?
 
 namespace ANewHope
@@ -55,6 +54,7 @@ namespace ANewHope
             pictureBox9.Hide();
             pictureBox6.Hide();
             pictureBox10.Hide();
+            pictureBox12.Hide();
             pictureBox2.Parent = pictureBox1;
 
             pictureBox3.Parent = pictureBox2;
@@ -68,6 +68,20 @@ namespace ANewHope
                     break;
                 }
             }
+        }
+
+        public void captureScr()
+        {
+            Rectangle form = this.Bounds;
+            Bitmap bmap = new Bitmap(form.Width-110, form.Height-32);
+            Graphics g = Graphics.FromImage(bmap);
+            Point p = new Point(form.Location.X + 100, form.Location.Y + 32);
+            g.CopyFromScreen(p, Point.Empty, bmap.Size);
+            pictureBox12.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox12.Image = bmap;
+            pictureBox12.BringToFront();
+            pictureBox12.Show();
+
         }
 
         public void pictureBox5_Click(object sender, EventArgs e)
@@ -188,7 +202,7 @@ namespace ANewHope
             grammar.Add("capture");
             grammar.Add("congratulations");
             grammar.Add("rifflandia");
-
+            grammar.Add("exit");
             grammar.Add("clear");
 
 
@@ -247,6 +261,10 @@ namespace ANewHope
                         this.pictureBox7_Click(null, null);
                         break;
                     case "CAPTURE":
+                        captureScr();
+                        break;
+                    case "EXIT":
+                        pictureBox12_Click(null, null);
                         break;
                     case "CELEBRATE":
                         if (page == 1) textBox1.Text = "HAVE A LUCKY BIRTHDAY!!!";
@@ -544,6 +562,17 @@ namespace ANewHope
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             sensor.Stop();
+        }
+
+        private void pictureBox11_Click(object sender, EventArgs e)
+        {
+            captureScr();
+        }
+
+        private void pictureBox12_Click(object sender, EventArgs e)
+        {
+            pictureBox12.SendToBack();
+            pictureBox12.Hide();
         }
 
 
