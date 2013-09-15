@@ -19,6 +19,8 @@ namespace ANewHope
 {
     public partial class Form1 : Form
     {
+        //Leprechaun: 820x, 650y, 210w, 350h
+
         KinectSensor sensor;
         public Form1()
         {
@@ -28,6 +30,8 @@ namespace ANewHope
                 if (kinectSensor.Status == KinectStatus.Connected)
                 {
                     sensor = kinectSensor;
+                    //pictureBox2.Parent = pictureBox1;
+                    //pictureBox3.Parent = pictureBox1;
                     break;
                 }
             }
@@ -136,10 +140,13 @@ namespace ANewHope
             {
                 Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
                 TextureBrush tb = new TextureBrush(cropped);
+
+                
                 Graphics g = Graphics.FromImage(bmap);
+                Color c = Color.Red;
+                g.Clear(c);
                 g.FillEllipse(tb, 0, 0, width, height);
             }
-
             //Bitmap final = new Bitmap((int)width, (int)height);
             //Graphics g = Graphics.FromImage(final);
             //g.FillEllipse(tb, 0, 0, width, height);
@@ -166,8 +173,7 @@ namespace ANewHope
                 {
 
                     ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
-
-
+                    
                 }
 
             }
@@ -176,7 +182,16 @@ namespace ANewHope
             VFrame.Dispose();
             SFrame.Dispose();
 
-            pictureBox1.Image = bmap;
+            pictureBox3.Image = bmap;
+            bmap.MakeTransparent(Color.Red);
+            Size tempSize = bmap.Size;
+            
+            tempSize.Width = 90;
+            tempSize.Height = 135;
+
+            pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
+            pictureBox3.Size = tempSize;
+            pictureBox2.BackColor = Color.Transparent;
         }
 
         void DrawBone(JointType j1, JointType j2, Skeleton S, Graphics g)
@@ -220,8 +235,6 @@ namespace ANewHope
         {
             sensor.Stop();
         }
-
-
 
 
     }
