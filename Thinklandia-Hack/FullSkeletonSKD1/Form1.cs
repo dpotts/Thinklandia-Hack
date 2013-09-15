@@ -19,14 +19,19 @@ using Microsoft.Speech.AudioFormat;
 using Microsoft.Speech.Recognition;
 using System.IO;
 
+//smoothing
+//adding text to ecard?
+//email?
+//another picture?
+//multiple people
+
 namespace ANewHope
 {
     public partial class Form1 : Form
     {
-        //Leprechaun: 820x, 650y, 210w, 350h
-
         KinectSensor sensor;
 
+        int page = 1;
         //and the speech recognition engine (SRE)
         private SpeechRecognitionEngine speechRecognizer;
         //Get the speech recognizer (SR)
@@ -44,21 +49,57 @@ namespace ANewHope
         public Form1()
         {
             InitializeComponent();
+
+            pictureBox2.Parent = pictureBox1;
+
+            pictureBox3.Parent = pictureBox2;
+            pictureBox4.Parent = pictureBox3; 
+
             foreach (var kinectSensor in KinectSensor.KinectSensors)
             {
                 if (kinectSensor.Status == KinectStatus.Connected)
                 {
                     sensor = kinectSensor;
-
-                    pictureBox2.Parent = pictureBox1;
-
-                    pictureBox3.Parent = pictureBox2;
-                    pictureBox4.Parent = pictureBox3;
                     break;
                 }
             }
         }
 
+        public void pictureBox5_Click(object sender, EventArgs e)
+        {
+            if (page == 1)
+            {
+                pictureBox6.Location = pictureBox2.Location;
+                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 120), pictureBox1.Location.Y);
+                //pictureBox2.Location = new Point(this.Location.X - (pictureBox2.Width + 120), pictureBox2.Location.Y);
+                page = 2;
+            }
+            else if (page == 2)
+            {
+                pictureBox1.Location = pictureBox6.Location;
+                pictureBox6.Location = new Point(this.Width + 20, pictureBox6.Location.Y);
+                page = 1;
+            }
+        }
+
+        public void pictureBox7_Click(object sender, EventArgs e)
+        {
+            if (page == 1)
+            {
+                pictureBox6.Location = pictureBox2.Location;
+                pictureBox1.Location = new Point(this.Location.X - (pictureBox1.Width + 140), pictureBox1.Location.Y);
+                //pictureBox2.Location = new Point(this.Location.X - (pictureBox2.Width + 120), pictureBox2.Location.Y);
+                page = 2;
+            }
+            else if (page == 2)
+            {
+                pictureBox1.Location = pictureBox6.Location;
+                pictureBox6.Location = new Point(this.Width + 20, pictureBox6.Location.Y);
+                page = 1;
+
+            }
+
+        }
         //Start streaming audio
         private void Start()
         {
@@ -93,10 +134,10 @@ namespace ANewHope
             grammar.Add("next");
             grammar.Add("previous");
 
-           // grammar.Add("cheese");
+            // grammar.Add("cheese");
             grammar.Add("capture");
             //grammar.Add("picture");
-           // grammar.Add("save");
+            // grammar.Add("save");
 
 
 
@@ -140,7 +181,7 @@ namespace ANewHope
             {
                 RejectSpeech(e.Result);
             }
-            else 
+            else
             {
                 //and finally, here we set what we want to happen when 
                 //the SRE recognizes a word
@@ -148,9 +189,11 @@ namespace ANewHope
                 {
                     case "NEXT":
                         textBox1.Text = "next";
+                        this.pictureBox5_Click(null, null);
                         break;
                     case "PREVIOUS":
                         textBox1.Text = "back";
+                        this.pictureBox7_Click(null, null);
                         break;
                     //case "CHEESE":
                     //    textBox1.Text = "picture0";
@@ -185,38 +228,9 @@ namespace ANewHope
                 speechRecognizer = CreateSpeechRecognizer();
                 Start();
             }
-       
-// I dunno if we'll need this later but maybe. lets just keep it in because its going the exception crap that we may need
-    //        if (sensor == null)
-    //        {
-  /*              sensor.Start();
-                try
-                {
-                    sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
-                    try
-                    {
-                        sensor.DepthStream.Range = DepthRange.Near;
-                        sensor.SkeletonStream.EnableTrackingInNearRange = true;
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        sensor.DepthStream.Range = DepthRange.Default;
-                        sensor.SkeletonStream.EnableTrackingInNearRange = false;
-                    }
-                    sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
-                    sensor.SkeletonStream.Enable();
-                    sensor.AllFramesReady += FramesReady;
-
- 
-                }
-                catch (InvalidOperationException)
-                {
-                }*/
-    //        }
         }
 
-        private static Bitmap ExtractBodyPartBitmap(KinectSensor sensor,Skeleton skeleton, Bitmap bmap, JointType jointType,float widthMeters,float heightMeters)
+        private Bitmap ExtractBodyPartBitmap(KinectSensor sensor, Skeleton skeleton, Bitmap bmap, JointType jointType, float widthMeters, float heightMeters)
         {
             ColorImageStream stream = sensor.ColorStream;
             ColorImageFormat imageFormat = stream.Format;
@@ -239,7 +253,7 @@ namespace ANewHope
             return bitmap;
         }
 
-        private static Bitmap DrawHead(ColorImageStream stream, Bitmap bmap, ColorImagePoint colorPoint, float depthMeters, float widthMeters, float heightMeters)
+        private Bitmap DrawHead(ColorImageStream stream, Bitmap bmap, ColorImagePoint colorPoint, float depthMeters, float widthMeters, float heightMeters)
         {
             float focalLength = stream.NominalFocalLengthInPixels;
             int widthPixels = (int)((widthMeters * focalLength) / depthMeters);
@@ -267,22 +281,35 @@ namespace ANewHope
             return bitmap;
         }
 
-        private static void cropImageToCircle(Bitmap bmap, float circleStartX, float circleStartY, float width, float height)
+        private void cropImageToCircle(Bitmap bmap, float circleStartX, float circleStartY, float width, float height)
         {
             Rectangle aRect = new Rectangle((int)circleStartX, (int)circleStartY, (int)width, (int)height);
+
+            float wScale = width;
+            float hScale = height;
+            if (page == 1)
+            {
+                wScale = (float)110.0;
+                hScale = (float)150.0;
+            }
+            else if (page == 2)
+            {
+                wScale = (float)170.0;
+                hScale = (float)230.0;
+            }
 
             // Check if aRect is within bmap bounds before using Clone() method 
             if ((bmap.Width >= aRect.Right) && (bmap.Height >= aRect.Bottom))
             {
                 Bitmap cropped = bmap.Clone(aRect, bmap.PixelFormat);
                 TextureBrush tb = new TextureBrush(cropped);
-                float xScale = (float)(110.0 / width);
+                float xScale = (float)(wScale / width);
                 tb.ScaleTransform(xScale, xScale);
-                
+
                 Graphics g = Graphics.FromImage(bmap);
                 Color c = Color.Red;
                 g.Clear(c);
-                g.FillEllipse(tb, 0, 0, 110, 150);
+                g.FillEllipse(tb, 0, 0, wScale, hScale);
             }
             //Bitmap final = new Bitmap((int)width, (int)height);
             //Graphics g = Graphics.FromImage(final);
@@ -310,7 +337,7 @@ namespace ANewHope
                 {
 
                     ExtractBodyPartBitmap(this.sensor, S, bmap, JointType.Head, 0.17f, 0.26f);
-                    
+
                 }
 
             }
@@ -322,19 +349,38 @@ namespace ANewHope
             pictureBox3.Image = bmap;
             bmap.MakeTransparent(Color.Red);
             Size tempSize = bmap.Size;
-            
-            tempSize.Width = 115;
-            tempSize.Height = 150;
+
+            if (page == 1)
+            {
+                pictureBox2.Parent = pictureBox1;
+
+                pictureBox3.Parent = pictureBox2;
+                pictureBox4.Parent = pictureBox3;
+
+                pictureBox3.Location = new Point(pictureBox2.Width / 2 - 15, 135);
+
+                tempSize.Width = 110;
+                tempSize.Height = 150;
+            }
+            else if (page == 2)
+            {
+                pictureBox3.Parent = pictureBox6;
+
+                pictureBox3.Location = new Point(pictureBox2.Width / 2 - 120, 80);
+
+                tempSize.Width = 170;
+                tempSize.Height = 230;
+            }
 
             pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
             pictureBox3.Size = tempSize;
-            pictureBox3.Location = new Point(pictureBox2.Width / 2-15, 135);
+
             pictureBox2.BackColor = Color.Transparent;
 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox4.Location = new Point(-300, -300);
             pictureBox4.Size = new Size(130, 175);
-            
+
         }
 
         void DrawBone(JointType j1, JointType j2, Skeleton S, Graphics g)
@@ -377,11 +423,6 @@ namespace ANewHope
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             sensor.Stop();
-        }
-
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-
         }
 
 
