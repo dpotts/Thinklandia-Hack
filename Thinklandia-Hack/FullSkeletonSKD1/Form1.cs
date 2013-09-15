@@ -30,8 +30,7 @@ namespace ANewHope
                 if (kinectSensor.Status == KinectStatus.Connected)
                 {
                     sensor = kinectSensor;
-                    //pictureBox2.Parent = pictureBox1;
-                    //pictureBox3.Parent = pictureBox1;
+                    pictureBox2.Parent = pictureBox1;
                     break;
                 }
             }
@@ -192,6 +191,10 @@ namespace ANewHope
             pictureBox3.SizeMode = PictureBoxSizeMode.Normal;
             pictureBox3.Size = tempSize;
             pictureBox2.BackColor = Color.Transparent;
+
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox4.Location = new Point(0, 0);
+            pictureBox4.Size = pictureBox3.Size;
         }
 
         void DrawBone(JointType j1, JointType j2, Skeleton S, Graphics g)
